@@ -1,0 +1,187 @@
+﻿@model List<FincaMVC.Models.Empleado>
+
+<h2 class="text-center mb-4" style="color:#333;">Lista de Empleados</h2>
+<div class="card mb-4" style="background-color:#F9F9F9; border:1px solid #ddd; border-radius:10px;">
+    <div class="card-body">
+
+        <form asp-action="Index" method="get" class="row g-3 mb-0">
+            <div class="col-md-3">
+                <input type="text" name="nombre" class="form-control" placeholder="Nombre"
+                       value="@ViewBag.Nombre"
+                       style="background-color:#F6F5F3; border:1px solid #ccc;" />
+            </div>
+
+            <div class="col-md-3">
+                <input type="text" name="apellido" class="form-control" placeholder="Apellido"
+                       value="@ViewBag.Apellido"
+                       style="background-color:#F6F5F3; border:1px solid #ccc;" />
+            </div>
+
+            <div class="col-md-3">
+                <input type="date" name="fechaContratacion" class="form-control"
+                       value="@ViewBag.FechaContratacion"
+                       style="background-color:#F6F5F3; border:1px solid #ccc;" />
+            </div>
+
+            <div class="col-md-3">
+                <button type="submit" class="btn w-100"
+                        style="background-color:#6CA0DC; color:white;">
+                    Filtrar
+                </button>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<div class="d-flex justify-content-center mb-3">
+    <a asp-action="Create" class="btn mb-3" style="background-color:#A3CEF1; color:#333;">Nuevo Empleado</a>
+</div>
+
+<div class="card shadow-sm" style="border-radius:12px; border:none;">
+    <div class="card-body">
+
+        <table class="table table-hover align-middle" style="background-color:#F6F5F3; border-radius:10px; overflow:hidden;">
+
+            <thead style="background-color:#A3CEF1; color:#333;">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Salario</th>
+                    <th>Fecha Contratación</th>
+                    <th>Estado</th>
+                    <th>Foto</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var emp in Model)
+                {
+                        <tr style="transition: all 0.2s;">
+
+                            <td class="fw-semibold">@emp.Nombre</td>
+                            <td>@emp.Apellido</td>
+
+                            <td style="color:#6CA0DC; font-weight:500;">
+                                RD$ @emp.Salario
+                            </td>
+
+                            <td>@emp.FechaContratacion.ToShortDateString()</td>
+
+                            <td>
+                                @if (emp.IdEstado == 1)
+                                {
+                                        <span class="badge px-3 py-2" style="background-color:#6FCF97;">Activo</span>
+                                }
+                                else if (emp.IdEstado == 2)
+                                {
+                                        <span class="badge px-3 py-2" style="background-color:#F2994A;">Inactivo</span>
+                                }
+                                else if (emp.IdEstado == 3)
+                                {
+                                        <span class="badge px-3 py-2" style="background-color:#BDBDBD;">Despedido</span>
+                                }
+                            </td>
+
+                            <td>
+                                <img src="@emp.FotoRuta"
+                                     width="60"
+                                     height="60"
+                                     style="object-fit:cover; border-radius:50%; border:2px solid #ddd;" />
+                            </td>
+
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@emp.IdEmpleado"
+                                   class="btn btn-sm"
+                                   style="background-color:#F2C94C; color:#333;">
+                                    Editar
+                                </a>
+
+                                @if (emp.IdEstado == 1)
+                                {
+                                        <form asp-action="Delete" asp-route-id="@emp.IdEmpleado" method="post"
+                                              style="display:inline;" onsubmit="return confirm('¿Seguro que quieres desactivar a este empleado?');">
+                                            <button type="submit" class="btn btn-sm"
+                                                    style="background-color:#EB5757; color:white;">
+                                                Desactivar
+                                            </button>
+                                        </form>
+
+                                        <form asp-action="Despedir" asp-route-id="@emp.IdEmpleado" method="post"
+                                              style="display:inline;" onsubmit="return confirm('¿Seguro que quieres despedir a este empleado?');">
+                                            <button type="submit" class="btn btn-sm"
+                                                    style="background-color:#333; color:white;">
+                                                Despedir
+                                            </button>
+                                        </form>
+                                }
+                                else
+                                {
+                                        <form asp-action="Activar" asp-route-id="@emp.IdEmpleado" method="post"
+                                              style="display:inline;" onsubmit="return confirm('¿Seguro que quieres reactivar a este empleado?');">
+                                            <button type="submit" class="btn btn-sm"
+                                                    style="background-color:#6FCF97; color:white;">
+                                                Activar
+                                            </button>
+                                        </form>
+                                }
+                            </td>
+
+                        </tr>
+                }
+            </tbody>
+
+        </table>
+
+    </div>
+</div>
+
+<nav>
+    <ul class="pagination justify-content-center">
+        @if (ViewBag.CurrentPage > 1)
+        {
+            <li class="page-item">
+                <a class="page-link"
+                   asp-action="Index"
+                   asp-route-page="@(ViewBag.CurrentPage - 1)"
+                   asp-route-nombre="@ViewBag.Nombre"
+                   asp-route-apellido="@ViewBag.Apellido"
+                   asp-route-fechaContratacion="@ViewBag.FechaContratacion"
+                   style="background-color:#F6F5F3; border-color:#ccc;">
+                    &laquo;
+                </a>
+            </li>
+        }
+
+        @for (int i = 1; i <= ViewBag.TotalPages; i++)
+        {
+            <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")" style="background-color:@(i == ViewBag.CurrentPage ? "#6CA0DC" : "#F6F5F3");">
+                <a class="page-link"
+                   asp-action="Index"
+                   asp-route-page="@i"
+                   asp-route-nombre="@ViewBag.Nombre"
+                   asp-route-apellido="@ViewBag.Apellido"
+                   asp-route-fechaContratacion="@ViewBag.FechaContratacion"
+                   style="color:@(i == ViewBag.CurrentPage ? "white" : "#333"); border-color:#ccc;">
+                    @i
+                </a>
+            </li>
+        }
+
+        @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+        {
+            <li class="page-item">
+                <a class="page-link"
+                   asp-action="Index"
+                   asp-route-page="@(ViewBag.CurrentPage + 1)"
+                   asp-route-nombre="@ViewBag.Nombre"
+                   asp-route-apellido="@ViewBag.Apellido"
+                   asp-route-fechaContratacion="@ViewBag.FechaContratacion"
+                   style="background-color:#F6F5F3; border-color:#ccc;">
+                    &raquo;
+                </a>
+            </li>
+        }
+    </ul>
+</nav>

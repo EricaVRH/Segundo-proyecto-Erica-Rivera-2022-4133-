@@ -1,0 +1,23 @@
+﻿@model FincaMVC.Models.Puesto
+
+<h2>Editar Puesto</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="IdPuesto" />
+
+    <div class="mb-3">
+        <label asp-for="Nombre" class="form-label"></label>
+        <input asp-for="Nombre" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="IdDepartamento" class="form-label">Departamento</label>
+        <select asp-for="IdDepartamento" class="form-select"
+                asp-items="@(new SelectList(ViewBag.Departamentos, "IdDepartamento", "Nombre", Model.IdDepartamento))">
+            <option value="">Seleccionar</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>

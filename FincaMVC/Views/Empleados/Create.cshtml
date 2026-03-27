@@ -1,0 +1,111 @@
+﻿@model FincaMVC.Models.Empleado
+
+<h2>Agregar Empleado</h2>
+<div asp-validation-summary="All" class="text-danger"></div>
+<form asp-action="Create" method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label asp-for="Nombre"></label>
+        <input asp-for="Nombre" class="form-control" />
+        <span asp-validation-for="Nombre" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Apellido"></label>
+        <input asp-for="Apellido" class="form-control" />
+        <span asp-validation-for="Apellido" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="IdDepartamento">Departamento</label>
+        <select asp-for="IdDepartamento" class="form-select"
+                asp-items="@(new SelectList(ViewBag.Departamentos, "IdDepartamento", "Nombre"))">
+            <option value="">-- Seleccionar Departamento --</option>
+        </select>
+        <span asp-validation-for="IdDepartamento" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="IdPuesto">Puesto</label>
+        <select asp-for="IdPuesto" class="form-select"
+                asp-items="@(new SelectList(ViewBag.Puestos, "IdPuesto", "Nombre"))">
+            <option value="">-- Seleccionar Puesto --</option>
+        </select>
+        <span asp-validation-for="IdPuesto" class="text-danger"></span>
+    </div>
+
+
+    <div class="mb-3">
+        <label asp-for="Salario"></label>
+        <input asp-for="Salario" class="form-control" />
+        <span asp-validation-for="Salario" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="FechaNacimiento"></label>
+        <input asp-for="FechaNacimiento" type="date" class="form-control" />
+        <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="FechaContratacion"></label>
+        <input asp-for="FechaContratacion" type="date" class="form-control" />
+        <span asp-validation-for="FechaContratacion" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Direccion"></label>
+        <input asp-for="Direccion" class="form-control" />
+        <span asp-validation-for="Direccion" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Telefono"></label>
+        <input asp-for="Telefono" class="form-control" />
+        <span asp-validation-for="Telefono" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Correo"></label>
+        <input asp-for="Correo" type="email" class="form-control" />
+        <span asp-validation-for="Correo" class="text-danger"></span>
+    </div>
+       
+    <div class="mb-3">
+        <label asp-for="Foto">Foto</label>
+        <input asp-for="Foto" type="file" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Agregar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).ready(function () {
+            // Cuando cambie el departamento
+            $("#IdDepartamento").change(function () {
+                var deptId = $(this).val();
+                var $puestoSelect = $("#IdPuesto");
+
+                // Limpiar el combo de puestos
+                $puestoSelect.empty();
+                $puestoSelect.append('<option value="">-- Seleccionando... --</option>');
+
+                if (deptId) {
+                    // Llamar a la accion del controlador MVC
+                    $.getJSON('@Url.Action("GetPuestos", "Empleados")', { departamentoId: deptId }, function (data) {
+                        $puestoSelect.empty();
+                        $puestoSelect.append('<option value="">-- Seleccionar Puesto --</option>');
+                        $.each(data, function (index, item) {
+                            $puestoSelect.append('<option value="' + item.idPuesto + '">' + item.nombre + '</option>');
+                        });
+                    });
+                } else {
+                    $puestoSelect.empty();
+                    $puestoSelect.append('<option value="">-- Seleccionar Puesto --</option>');
+                }
+            });
+        });
+    </script>
+}

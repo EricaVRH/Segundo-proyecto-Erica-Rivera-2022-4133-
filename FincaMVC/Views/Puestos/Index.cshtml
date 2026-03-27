@@ -1,0 +1,42 @@
+﻿@model List<FincaMVC.Models.Puesto>
+
+<h2>Puestos</h2>
+<a asp-action="Create" class="btn btn-success">Nuevo Puesto</a>
+<br />
+<br />
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Departamento</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var p in Model)
+        {
+            <tr>
+                <td>@p.Nombre</td>
+                <td>@p.Departamento?.Nombre</td>
+                <td>@(p.IdEstado == 1 ? "Activo" : "Inactivo")</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@p.IdPuesto" class="btn btn-warning btn-sm">Editar</a>
+
+                    @if (p.IdEstado == 1)
+                    {
+                        <form asp-action="Delete" asp-route-id="@p.IdPuesto" method="post" style="display:inline">
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Seguro que deseas desactivar este puesto?')">Desactivar</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <form asp-action="Activar" asp-route-id="@p.IdPuesto" method="post" style="display:inline">
+                            <button type="submit" class="btn btn-success btn-sm">Activar</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

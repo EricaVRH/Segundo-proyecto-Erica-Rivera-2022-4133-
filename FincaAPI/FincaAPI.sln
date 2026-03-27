@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.37012.4
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FincaAPI", "FincaAPI.csproj", "{82711350-2993-46F1-A1E5-C294B326D497}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FincaMVC", "..\FincaMVC\FincaMVC.csproj", "{C06CA467-4DB1-4213-B730-F9B0FB1B1188}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{82711350-2993-46F1-A1E5-C294B326D497}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82711350-2993-46F1-A1E5-C294B326D497}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82711350-2993-46F1-A1E5-C294B326D497}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82711350-2993-46F1-A1E5-C294B326D497}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C06CA467-4DB1-4213-B730-F9B0FB1B1188}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C06CA467-4DB1-4213-B730-F9B0FB1B1188}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C06CA467-4DB1-4213-B730-F9B0FB1B1188}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C06CA467-4DB1-4213-B730-F9B0FB1B1188}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {480E8800-2C3C-4E3D-BDF7-818BD44779C6}
+	EndGlobalSection
+EndGlobal

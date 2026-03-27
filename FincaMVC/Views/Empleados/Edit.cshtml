@@ -1,0 +1,80 @@
+﻿@model FincaMVC.Models.Empleado
+
+<h2>Editar Empleado</h2>
+
+<form asp-action="Edit" method="post" enctype="multipart/form-data">
+    <input type="hidden" asp-for="IdEmpleado" />
+
+    <div class="mb-3">
+        <label asp-for="Nombre" class="form-label"></label>
+        <input asp-for="Nombre" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Apellido" class="form-label"></label>
+        <input asp-for="Apellido" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="IdDepartamento" class="form-label">Departamento</label>
+        <select asp-for="IdDepartamento" class="form-select"
+                asp-items="@(ViewBag.Departamentos != null ?
+                                              new SelectList(ViewBag.Departamentos, "IdDepartamento", "Nombre", Model.IdDepartamento) :
+                                              new SelectList(new List<FincaMVC.Models.Departamento>()))">
+            <option value="">-- Seleccionar --</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="IdPuesto" class="form-label">Puesto</label>
+        <select asp-for="IdPuesto" class="form-select"
+                asp-items="@(ViewBag.Puestos != null ?
+                                              new SelectList(ViewBag.Puestos, "IdPuesto", "Nombre", Model.IdPuesto) :
+                                              new SelectList(new List<FincaMVC.Models.Puesto>()))">
+            <option value="">-- Seleccionar --</option>
+        </select>
+    </div>
+       
+    <div class="mb-3">
+        <label asp-for="Salario" class="form-label"></label>
+        <input asp-for="Salario" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="FechaNacimiento" class="form-label"></label>
+        <input asp-for="FechaNacimiento" type="date" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="FechaContratacion" class="form-label"></label>
+        <input asp-for="FechaContratacion" type="date" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Direccion" class="form-label"></label>
+        <input asp-for="Direccion" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Telefono" class="form-label"></label>
+        <input asp-for="Telefono" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Correo" class="form-label"></label>
+        <input asp-for="Correo" type="email" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Foto actual</label><br />
+        <img src="@Model.FotoRuta" width="100" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Foto" class="form-label">Cambiar Foto</label>
+        <input asp-for="Foto" type="file" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>

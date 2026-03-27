@@ -1,0 +1,37 @@
+﻿@model FincaMVC.Models.Puesto
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Crear Puesto</h2>
+
+<form asp-action="Create" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="form-group">
+        <label asp-for="Nombre" class="control-label"></label>
+        <input asp-for="Nombre" class="form-control" />
+        <span asp-validation-for="Nombre" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="IdDepartamento" class="control-label">Departamento</label>
+        <select asp-for="IdDepartamento" asp-items="ViewBag.Departamentos" class="form-control">
+            <option value="">Seleccione</option>
+        </select>
+        <span asp-validation-for="IdDepartamento" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="IdEstado" class="control-label"></label>
+        <select asp-for="IdEstado" class="form-control">
+            <option value="1" selected>Activo</option>
+            <option value="2">Inactivo</option>
+        </select>
+        <span asp-validation-for="IdEstado" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>

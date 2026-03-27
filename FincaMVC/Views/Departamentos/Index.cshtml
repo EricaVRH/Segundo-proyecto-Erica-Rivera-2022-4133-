@@ -1,0 +1,51 @@
+﻿@model List<FincaMVC.Models.Departamento>
+
+<h2>Departamentos</h2>
+<a asp-action="Create" class="btn btn-success">Nuevo Departamento</a>
+<br />
+<br />
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var dep in Model)
+        {
+            <tr>
+                <td>@dep.Nombre</td>
+                <td>@(dep.IdEstado == 1 ? "Activo" : "Inactivo")</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@dep.IdDepartamento" class="btn btn-warning btn-sm">Editar</a>
+
+                    @if (dep.IdEstado == 1)
+                    {
+                        <form asp-action="Delete" asp-route-id="@dep.IdDepartamento" method="post" style="display:inline">
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Seguro que deseas desactivar este departamento?')">Desactivar</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <form asp-action="Activar" asp-route-id="@dep.IdDepartamento" method="post" style="display:inline">
+                            <button type="submit" class="btn btn-success btn-sm">Activar</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<nav>
+    <ul class="pagination">
+        @for (int i = 1; i <= ViewBag.TotalPages; i++)
+        {
+            <li class="page-item @(i == ViewBag.Page ? "active" : "")">
+                <a class="page-link" href="@Url.Action("Index", new { nombre = ViewBag.Nombre, apellido = ViewBag.Apellido, fechaContratacion = ViewBag.FechaContratacion, page = i })">@i</a>
+            </li>
+        }
+    </ul>
+</nav>
